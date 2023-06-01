@@ -36,7 +36,10 @@ class Course(models.Model):
     day = models.CharField(max_length=50, choices=DAY_CHOICES)
     start_time = models.TimeField()
     length_in_hours = models.FloatField(default=1.00)
-    teacher = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(
+        to=User, on_delete=models.CASCADE, related_name='courses_teaching')
+    students = models.ManyToManyField(
+        to=User, related_name='courses_taking', blank=True)
 
     def __str__(self):
         return self.title
